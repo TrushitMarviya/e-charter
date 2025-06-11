@@ -7,8 +7,8 @@ export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-md px-4 sm:px-6 md:px-8">
-      <nav className="max-w-[1760px] mx-auto flex items-center justify-between h-[60px] my-6">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-md px-4 sm:px-6 md:px-8 ">
+      <nav className="max-w-[1760px] mx-auto flex items-center justify-between h-[60px] my-2">
         {/* Logo */}
         <div className="flex-shrink-0 w-[70px] sm:w-[80px] md:w-[90px]">
           <a href="/">

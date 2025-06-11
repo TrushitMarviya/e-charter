@@ -13,215 +13,185 @@ export default function Hero() {
   const [luggageCount, setLuggageCount] = useState(0);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // Process form data and navigate to search results
+    if (e) e.preventDefault();
     router.push("/search-results");
   };
 
+  const tripIconMap = {
+    "one-way": "single-trip",
+    "round-trip": "round-trip",
+    "local": "multi-stop",
+  };
+
   return (
-    <div className="flex justify-center mt-[110px]">
-      <div className="w-[1780px] h-[881px] rounded-4xl bg-[url('/homePage/hero-bg.png')] bg-cover bg-center bg-no-repeat">
-        <p className="text-center text-[#3DBEC8] flex items-center justify-center text-base lg:mt-[170px]">
-          ∗ Welcome To e CHARTER
-        </p>
-        <p className="text-center flex justify-center text-[#FFFFFF] font-bold w-[1008px] mx-auto text-[74px] leading-[95px]">
-          Looking to save more on your rental car?
-        </p>
-        <p className="text-center flex justify-center text-[#FFFFFF] w-[725px] mx-auto text-[18px]">
-          Whether you're planning a weekend getaway, a business trip, or just
-          need a reliable ride for the day, we offers a wide range of vehicles
-          to suit your needs.
-        </p>
+    <div className="flex justify-center px-4 py-8 md:py-[80px] relative mt-5">
+      <div className="w-full max-w-[1780px] rounded-4xl bg-[url('/homePage/hero-bg.png')] bg-cover bg-center bg-no-repeat pt-10 md:pt-[140px] pb-16 md:pb-[100px] lg:min-h-[1000px] xl:min-h-[1100px]">
+        <div className="flex flex-col items-center text-center px-4">
+          <p className="text-[#3DBEC8] text-sm md:text-base">
+            ∗ Welcome To e CHARTER
+          </p>
+          <h1 className="text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[74px] leading-tight lg:leading-[95px] px-4 max-w-[90%] md:max-w-[1008px] mx-auto mt-4">
+            Looking to save more on your rental car?
+          </h1>
+          <p className="text-white text-sm md:text-[18px] max-w-[90%] sm:max-w-[725px] mx-auto mt-4">
+            Whether you're planning a weekend getaway, a business trip, or just
+            need a reliable ride for the day, we offer a wide range of vehicles
+            to suit your needs.
+          </p>
+        </div>
 
-        {/* Trip Selection Form - Matching Figma Design */}
-        <div className="h-[185px] w-[1281px] mx-auto bg-white rounded-[30px] mt-[210px] shadow-lg">
-          <div className="h-full p-4 border">
-            {/* Trip Type Tabs */}
-            <div className="flex border-b border-[#E5E5E5] border-2">
-              <button
-                className={`px-6 py-3 text-sm flex justify-center items-center gap-2 font-semibold ${
-                  activeTab === "one-way"
-                    ? "text-[#3DBEC8] border-b-2 border-[#3DBEC8]"
-                    : "text-[#666666]"
-                }`}
-                onClick={() => setActiveTab("one-way")}
-              >
-                <img
-                  src={
-                    activeTab === "one-way"
-                      ? "/homepage/single-trip-active.png"
-                      : "/homepage/single-trip.png"
-                  }
-                  alt="Single Trip"
-                />
-                Single Trip
-              </button>
-              <button
-                className={`px-6 py-3 text-sm flex justify-center items-center gap-2 font-semibold ${
-                  activeTab === "round-trip"
-                    ? "text-[#3DBEC8] border-b-2 border-[#3DBEC8]"
-                    : "text-[#666666]"
-                }`}
-                onClick={() => setActiveTab("round-trip")}
-              >
-                <img
-                  src={
-                    activeTab === "round-trip"
-                      ? "/homepage/round-trip-active.png"
-                      : "/homepage/round-trip.png"
-                  }
-                  alt="Round Trip"
-                />
-                Round Trip
-              </button>
-              <button
-                className={`px-6 py-3 text-sm flex justify-center items-center gap-2 font-semibold ${
-                  activeTab === "local"
-                    ? "text-[#3DBEC8] border-b-2 border-[#3DBEC8]"
-                    : "text-[#666666]"
-                }`}
-                onClick={() => setActiveTab("local")}
-              >
-                <img
-                  src={
-                    activeTab === "local"
-                      ? "/homepage/multi-stop-active.png"
-                      : "/homepage/multi-stop.png"
-                  }
-                  alt="Multi Stop"
-                />
-                Multi Stop
-              </button>
-              <div className="flex items-center justify-between flex-wrap gap-4 mx-auto">
-                {/* Person Counter */}
-                <div className="flex items-center gap-5 p-3 border border-gray-300 rounded-full h-[80%]">
-                  <span className="text-base text-[#000] font-medium ">
-                    Person
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setPersonCount(Math.max(1, personCount - 1))}
-                    className="w-8 h-8 bg-[#3DC1C4] text-[#FFF] rounded-full flex items-center justify-center text-3xl"
+        {/* Trip selector section with responsive positioning */}
+        <div className="w-full max-w-[1281px] mx-auto px-4 lg:absolute lg:bottom-40 lg:left-1/2 lg:transform lg:-translate-x-1/2">
+          <div className="bg-white rounded-2xl md:rounded-[30px] mt-12 md:mt-[180px] lg:mt-0 shadow-lg px-4 md:px-6 py-6">
+            <div className="space-y-4">
+              <div className="w-full border-b border-[#E5E5E5] pb-4">
+                <div className="block lg:hidden w-full mb-4">
+                  <label className="text-sm font-semibold mb-1 block text-left">
+                    Trip Type
+                  </label>
+                  <select
+                    value={activeTab}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === "local") {
+                        router.push("/multi-stop");
+                      } else {
+                        setActiveTab(value);
+                      }
+                    }}
+                    className="w-full border border-gray-300 rounded-lg p-2 text-sm"
                   >
-                    -
-                  </button>
-                  <span className="min-w-[20px] text-center text-xl font-medium">
-                    {personCount}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setPersonCount(personCount + 1)}
-                    className="w-8 h-8 bg-[#3DC1C4] text-[#FFF] rounded-full flex items-center justify-center text-2xl"
-                  >
-                    +
-                  </button>
+                    <option value="one-way">Single Trip</option>
+                    <option value="round-trip">Round Trip</option>
+                    <option value="local">Multi Stop</option>
+                  </select>
                 </div>
 
-                {/* Luggage Counter */}
-                <div className="flex items-center gap-5 p-3 border border-gray-300 rounded-full h-[80%]">
-                  <span className="text-base text-[#000] font-medium ">
-                    Luggage
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setLuggageCount(Math.max(0, luggageCount - 1))
-                    }
-                    className="w-8 h-8 bg-[#3DC1C4] text-[#FFF] rounded-full flex items-center justify-center text-3xl"
-                  >
-                    -
-                  </button>
-                  <span className="min-w-[20px] text-center text-xl font-medium">
-                    {luggageCount}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setLuggageCount(luggageCount + 1)}
-                    className="w-8 h-8 bg-[#3DC1C4] text-[#FFF] rounded-full flex items-center justify-center text-2xl"
-                  >
-                    +
-                  </button>
-                </div>
+                <div className="hidden lg:flex flex-wrap items-center gap-4 lg:gap-6 xl:gap-8">
+                  {Object.keys(tripIconMap).map((type) => (
+                    <button
+                      key={type}
+                      className={`flex items-center gap-2 px-3 py-2 text-xs md:text-sm font-semibold ${
+                        activeTab === type
+                          ? "text-[#3DBEC8] border-b-2 border-[#3DBEC8]"
+                          : "text-[#666666]"
+                      }`}
+                      onClick={() => {
+                        if (type === "local") {
+                          router.push("/multi-stop");
+                        } else {
+                          setActiveTab(type);
+                        }
+                      }}
+                    >
+                      <img
+                        src={`/homepage/${
+                          activeTab === type
+                            ? tripIconMap[type] + "-active"
+                            : tripIconMap[type]
+                        }.png`}
+                        alt={`${type} icon`}
+                        className="w-4 h-4 md:w-5 md:h-5"
+                      />
+                      <span className="capitalize">
+                        {type.replace("-", " ")}
+                      </span>
+                    </button>
+                  ))}
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="bg-[#3DBEC8] text-white px-6 py-3 font-semibold hover:bg-[#36acb5] transition-all text-base rounded-full "
-                >
-                  Get Quote
-                </button>
+                  <div className="flex items-center gap-3 ml-auto">
+                    <div className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-full">
+                      <span className="text-sm">Person</span>
+                      <button
+                        onClick={() => setPersonCount(Math.max(1, personCount - 1))}
+                        className="w-6 h-6 bg-[#3DC1C4] text-white rounded-full"
+                      >-</button>
+                      <span>{personCount}</span>
+                      <button
+                        onClick={() => setPersonCount(personCount + 1)}
+                        className="w-6 h-6 bg-[#3DC1C4] text-white rounded-full"
+                      >+</button>
+                    </div>
+
+                    <div className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-full">
+                      <span className="text-sm">Luggage</span>
+                      <button
+                        onClick={() => setLuggageCount(Math.max(0, luggageCount - 1))}
+                        className="w-6 h-6 bg-[#3DC1C4] text-white rounded-full"
+                      >-</button>
+                      <span>{luggageCount}</span>
+                      <button
+                        onClick={() => setLuggageCount(luggageCount + 1)}
+                        className="w-6 h-6 bg-[#3DC1C4] text-white rounded-full"
+                      >+</button>
+                    </div>
+
+                    <button
+                      onClick={handleSubmit}
+                      className="bg-[#3DBEC8] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#36acb5] text-sm"
+                    >
+                      Get Quote
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Form Fields */}
-            <form onSubmit={handleSubmit} className="mt-4">
-              <div className="flex items-center gap-4">
-                {/* Pickup Location */}
-                {/* Pickup Location */}
-                <div className="flex-1">
-                  <div className="relative">
-                    <img
-                      src="/homepage/pickup.png"
-                      alt="Pickup Icon"
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                    />
+              <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-0 lg:flex lg:flex-wrap lg:gap-4">
+                <div className="w-full lg:w-[23%]">
+                  <label className="block text-sm font-semibold text-left mb-1 md:hidden">
+                    Pickup Location
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Pickup Location"
+                    value={pickupLocation}
+                    onChange={(e) => setPickupLocation(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+
+                {(activeTab === "one-way" || activeTab === "round-trip") && (
+                  <div className="w-full lg:w-[23%]">
+                    <label className="block text-sm font-semibold text-left mb-1 md:hidden">
+                      Dropoff Location
+                    </label>
                     <input
                       type="text"
-                      placeholder="Pickup Location"
-                      value={pickupLocation}
-                      onChange={(e) => setPickupLocation(e.target.value)}
-                      className="w-full pl-10 p-3 border-b border-[#DDDDDD] font-semibold focus:outline-none focus:ring-2 focus:ring-[#3DBEC8] text-[#333333]"
+                      placeholder="Drop Off Location"
+                      value={dropoffLocation}
+                      onChange={(e) => setDropoffLocation(e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md"
                     />
-                  </div>
-                </div>
-
-                {/* Dropoff Location - Only shown for One Way and Round Trip */}
-                {(activeTab === "one-way" || activeTab === "round-trip") && (
-                  <div className="flex-1">
-                    <div className="relative">
-                      <img
-                        src="/homepage/drop.png"
-                        alt="Dropoff Icon"
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Drop Off Location"
-                        value={dropoffLocation}
-                        onChange={(e) => setDropoffLocation(e.target.value)}
-                        className="w-full pl-10 p-3 border-b border-[#bbbbbb] font-semibold focus:outline-none focus:ring-2 focus:ring-[#3DBEC8] text-[#333333]"
-                      />
-                    </div>
                   </div>
                 )}
 
-                {/* Pickup Date */}
-                <div className="flex-1">
-                  <div className="relative">
+                <div className="w-full lg:w-[23%]">
+                  <label className="block md:hidden text-sm font-semibold text-left mb-1">
+                    Departure Date
+                  </label>
+                  <input
+                    type="date"
+                    value={pickupDate}
+                    onChange={(e) => setPickupDate(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+
+                {activeTab === "round-trip" && (
+                  <div className="w-full lg:w-[23%]">
+                    <label className="block md:hidden text-sm font-semibold text-left mb-1">
+                      Return Date
+                    </label>
                     <input
                       type="date"
-                      value={pickupDate}
-                      onChange={(e) => setPickupDate(e.target.value)}
-                      className="w-full p-3 border-b border-[#bbbbbb] font-semibold  focus:outline-none focus:ring-2 focus:ring-[#3DBEC8] text-[#333333]"
+                      value={returnDate}
+                      onChange={(e) => setReturnDate(e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md"
                     />
                   </div>
-                </div>
-
-                {/* Return Date - Only shown for Round Trip */}
-                {activeTab === "round-trip" && (
-                  <div className="flex-1">
-                    <div className="relative">
-                      <input
-                        type="date"
-                        value={returnDate}
-                        onChange={(e) => setReturnDate(e.target.value)}
-                        className="w-full p-3 border-b border-[#bbbbbb] font-semibold  focus:outline-none focus:ring-2 focus:ring-[#3DBEC8] text-[#333333]"
-                      />
-                    </div>
-                  </div>
                 )}
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
