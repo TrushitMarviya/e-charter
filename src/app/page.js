@@ -5,6 +5,7 @@ import Choice from '@/Components/home/choice'
 import Service from '@/Components/home/service'
 import Fleet from '@/Components/home/fleet'
 import Quality from'@/Components/home/quality'
+import BookCar from'@/Components/home/bookCar'
 
 export default function page() {
   return (
@@ -14,6 +15,7 @@ export default function page() {
     <Service/>
     <Fleet/>
     <Quality/>
+    <BookCar/>
     </>
   )
 }
