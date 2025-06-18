@@ -45,7 +45,7 @@ export default function Footer() {
                 items: ["Rental", "Chauffeur", "Insurance", "Leasing", "Fleet"],
               },
             ].map((section) => (
-              <div key={section.title}  className="px-auto">
+              <div key={section.title}  className="px-15 w-[250px]">
                 <h3 className="text-lg font-bold text-[#1E1E1E] mb-4 ">
                   {section.title}
                 </h3>
@@ -103,7 +103,7 @@ export default function Footer() {
               <div className="h-[50px] w-[50px] bg-[#8D8D8D] text-white rounded-full flex items-center justify-center">
                 <FontAwesomeIcon icon={info.icon} className="text-[20px]" />
               </div>
-              <div className="text-center sm:text-left">
+              <div className="">
                 <p className="text-sm text-[#4A4A4A]">{info.label}</p>
                 <p className="text-sm font-semibold text-[#1E1E1E]">
                   {info.value}
